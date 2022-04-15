@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <ClickCounter />
+    <ClickCounter label='PHP'/>
+    <ClickCounter label='JS'/>
+    <ClickCounter label='Css'/>
+    <ClickCounter label='Sass'/>
+    
   </div>
 </template>
 
