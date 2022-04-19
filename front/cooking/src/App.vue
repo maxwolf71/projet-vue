@@ -1,20 +1,24 @@
 <template>
   <div id="app">
-    <ClickCounter label='PHP'/>
-    <ClickCounter label='JS'/>
-    <ClickCounter label='Css'/>
-    <ClickCounter label='Sass'/>
-    
+    <CookingHeader />
+    <main>
+      <CookingRecipeList />
+    </main>
+    <CookingFooter />
   </div>
 </template>
 
 <script>
-import ClickCounter from './components/ClickCounter.vue'
+import CookingHeader from './components/CookingHeader.vue'
+import CookingFooter from './components/CookingFooter.vue'
+import CookingRecipeList  from './components/CookingRecipeList.vue'
 
 export default {
   name: 'App',
   components: {
-    ClickCounter,
+    CookingHeader,
+    CookingFooter,
+    CookingRecipeList,
   }
 }
 </script>
