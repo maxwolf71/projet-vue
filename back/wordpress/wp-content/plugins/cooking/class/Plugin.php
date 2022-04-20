@@ -1,21 +1,51 @@
 <?php
-namespace cooking;
+namespace Cooking;
 
-class Plugin 
+class Plugin
 {
+
+
     public function __construct() {
+
         add_action(
             'init',
             [$this, 'createRecipePostType']
         );
+
+        add_action(
+            'init',
+            [$this, 'createIngredientCustomTaxonomy']
+        );
+
+        add_action(
+            'init',
+            [$this, 'createRecipeTypeCustomTaxonomy']
+        );
+
+
+        add_action(
+            'init',
+            [$this, 'createRecipeDifficultyCustomTaxonomy']
+        );
+
     }
 
-    public function activate() {
+    public function activate()
+    {
         $this->registerChefRole();
-        // $this->registerCustomerRole();
 
-        
+
+        $this->createRecipePostType();
+        $this->createRecipeDifficultyCustomTaxonomy();
+        wp_insert_term('Facile', 'difficulty');
+        wp_insert_term('Moyen', 'difficulty');
+        wp_insert_term('Difficile', 'difficulty');
+        wp_insert_term('Chef', 'difficulty');
+        wp_insert_term('Screugnieugnieu', 'difficulty');
+
+
     }
+
 
     public function createRecipePostType()
     {
@@ -31,8 +61,11 @@ class Plugin
                     'thumbnail',
                     'editor',
                     'author',
+                    'excerpt',
+                    // WARNING pour que les commentaires remontent dans l'API, ne pas oublier d'activer la "feature" comments
+                    'comments',
                 ],
-                'capability_type' => 'recipe',
+                'capability_type' => 'post',
                 'map_meta_cap' => true,
 
                 // IMPORTANT WP le cpt recipe est accessible depuis l'api wordpress
@@ -41,9 +74,52 @@ class Plugin
         );
     }
 
-    public function deactivate() 
+    public function createRecipeDifficultyCustomTaxonomy()
+    {
+        register_taxonomy(
+            'difficulty',
+            ['recipe'],
+            [
+                'label' => 'Difficulté',
+                'hierarchical' => false,
+                'public' => true,
+                'show_in_rest' => true
+            ]
+        );
+    }
+
+    public function createIngredientCustomTaxonomy()
+    {
+        register_taxonomy(
+            'ingredient',
+            ['recipe'],
+            [
+                'label' => 'Ingrédient',
+                'hierarchical' => true,
+                'public' => true,
+                'show_in_rest' => true
+            ]
+        );
+    }
+
+    public function createRecipeTypeCustomTaxonomy()
+    {
+        register_taxonomy(
+            'recipe-type',
+            ['recipe'],
+            [
+                'label' => 'Type de recette',
+                'hierarchical' => false,
+                'public' => true,
+                'show_in_rest' => true
+            ]
+        );
+    }
+
+    public function deactivate()
     {
         remove_role('chef');
+
     }
 
     public function registerChefRole()
@@ -53,4 +129,5 @@ class Plugin
             'Chef Cuisinier'
         );
     }
+
 }

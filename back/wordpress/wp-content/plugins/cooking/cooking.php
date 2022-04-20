@@ -1,6 +1,6 @@
 <?php
- /**
-  * Plugin Name: cooking
+ /*
+  Plugin Name: Cooking
   */
 
 use cooking\Plugin;
