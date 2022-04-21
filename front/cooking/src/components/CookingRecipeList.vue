@@ -1,6 +1,9 @@
 <template>
     <section>
         <h1>Recettes</h1>
+        <div>
+            <CookingRecipeTypeList />
+        </div>
         <ul>
             <li 
                 v-for="recipe in recipes" 
@@ -13,6 +16,7 @@
 
 <script>
 import RecipeCard  from './CookingRecipe.vue'
+import CookingRecipeTypeList  from './CookingRecipeTypeList.vue'
 import recipeService  from '../services/recipeService.js'
 
 export default {
@@ -26,7 +30,8 @@ export default {
         }
     },
     components: {
-        RecipeCard
+        RecipeCard,
+        CookingRecipeTypeList
     }, 
     
 }
