@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :style="style">
     <CookingHeader />
     <main>
       <CookingRecipeList v-on:recipe-type-selected="debugTypeSelected" />
@@ -23,6 +23,12 @@ export default {
   methods: {
     debugTypeSelected(selectedType) {
       console.log(selectedType);
+      this.style = 'background-color: #555'
+    }
+  },
+  data() {
+    return {
+      style: ''
     }
   }
 }
