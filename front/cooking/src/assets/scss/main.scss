@@ -1,0 +1,28 @@
+$border-radius: 2rem;
+$color-light-green: #eef3ed;
+$gutter: 1rem;
+$shadow: 0 3px 3px #0005;
+
+.card {
+    border: 1px solid black;
+    border-radius: $border-radius;
+    position: relative;
+    overflow: hidden;
+    background-color: $color-light-green;
+    margin: $gutter;
+    box-shadow: $shadow;
+
+    img {
+        width: 100%;
+        display: block;
+    }
+
+    &__content  {
+        padding: $gutter $gutter*2;
+        list-style: none;
+    }
+}
+
+li {
+    list-style: none;
+}
