@@ -2,7 +2,10 @@
     <section>
         <h1>Recettes</h1>
         <div>
-            <CookingRecipeTypeList />
+            <CookingRecipeTypeList 
+                v-on:recipe-type-selected="handleRecipeTypeSelected" 
+            />
+            <CookingRecipeIngredients />
         </div>
         <ul>
             <li 
@@ -17,6 +20,7 @@
 <script>
 import RecipeCard  from './CookingRecipe.vue'
 import CookingRecipeTypeList  from './CookingRecipeTypeList.vue'
+import CookingRecipeIngredients from './CookingRecipeIngredients.vue'
 import recipeService  from '../services/recipeService.js'
 
 export default {
@@ -31,8 +35,16 @@ export default {
     },
     components: {
         RecipeCard,
-        CookingRecipeTypeList
+        CookingRecipeTypeList, 
+        CookingRecipeIngredients
     }, 
+    methods: {
+        async handleRecipeTypeSelected(selectedType) {
+            this.$emit("recipe-type-selected", selectedType);
+
+            this.recipes = await recipeService.getRecipeByTypes(selectedType);
+        }
+    }
     
 }
 </script>

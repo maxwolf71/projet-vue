@@ -10,7 +10,17 @@ const recipeService = {
   },
 
   async loadRecipeTypes() {
-    const response = await axios.get(recipeService.baseURI + "/recipe-type?_embed=true");
+    const response = await axios.get(recipeService.baseURI + "/recipe-type");
+    return response.data;
+  },
+
+  async loadRecipeIngredients() {
+    const response = await axios.get(recipeService.baseURI + "/ingredient");
+    return response.data;
+  },
+
+  async getRecipeByTypes(selectedType) {
+    const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&recipe-type=' + selectedType);
     return response.data;
   }
 };

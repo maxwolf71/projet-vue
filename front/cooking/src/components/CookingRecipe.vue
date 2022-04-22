@@ -16,7 +16,7 @@ export default {
 
     computed: {
         getImageUrl() {
-            if (this.recipe._embedded['wp:featuredmedia'] && this.recipe._embedded['wp:featuredmedia'][0].media_details && this.recipe._embedded['wp:featuredmedia'][0].media_details.sizes){
+            if (this.recipe._embedded['wp:featuredmedia']){
                 return this.recipe._embedded['wp:featuredmedia'][0].source_url;
             } else {
                 return 'https://picsum.photos/seed/picsum/400/300'

@@ -2,7 +2,7 @@
   <div id="app">
     <CookingHeader />
     <main>
-      <CookingRecipeList />
+      <CookingRecipeList v-on:recipe-type-selected="debugTypeSelected" />
     </main>
     <CookingFooter />
   </div>
@@ -19,6 +19,11 @@ export default {
     CookingHeader,
     CookingFooter,
     CookingRecipeList,
+  },
+  methods: {
+    debugTypeSelected(selectedType) {
+      console.log(selectedType);
+    }
   }
 }
 </script>

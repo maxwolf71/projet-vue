@@ -1,27 +1,35 @@
 <template>
-    <select>
-        <option 
-            v-for="type in recipeTypes" 
-            :key="type.id"
-            :value="type.id"
-        >
-            {{type.name}}
-        </option>
-    </select>
+  <select
+    v-if="recipeTypes.length"
+    v-model="selectedOption"
+    @change="selectType"
+  >
+    <option>Choisir un type de plat</option>
+    <option v-for="type in recipeTypes" :key="type.id" :value="type.id">
+      {{ type.name }}
+    </option>
+  </select>
 </template>
 
 <script>
-import recipeService  from '../services/recipeService.js'
+import recipeService from "../services/recipeService.js";
 
 export default {
-    async created() {
-        this.recipeTypes = await recipeService.loadRecipeTypes();
+  async created() {
+    this.recipeTypes = await recipeService.loadRecipeTypes();
+  },
+  name: "CookingRecipeTypeList",
+  data() {
+    return {
+      recipeTypes: [],
+      selectedOption: null,
+    };
+  },
+  methods: {
+    selectType(event) {
+      event.preventDefault();
+      this.$emit("recipe-type-selected", this.selectedOption);
     },
-    name: 'CookingRecipeTypeList',
-    data() {
-        return {
-            recipeTypes: []
-        }
-    }
-}
+  },
+};
 </script>
