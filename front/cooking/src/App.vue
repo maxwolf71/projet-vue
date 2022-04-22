@@ -1,24 +1,27 @@
 <template>
   <div id="app" :style="style">
-    <CookingHeader />
+    <Header />
     <main>
-      <CookingRecipeList v-on:recipe-type-selected="debugTypeSelected" />
+      <router-view />
     </main>
-    <CookingFooter />
+    <!-- <main>
+      <CookingRecipeList v-on:recipe-type-selected="debugTypeSelected" />
+    </main> -->
+    <Footer />
   </div>
 </template>
 
 <script>
-import CookingHeader from './components/CookingHeader.vue'
-import CookingFooter from './components/CookingFooter.vue'
-import CookingRecipeList  from './components/CookingRecipeList.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+// import CookingRecipeList  from './components/CookingRecipeList.vue'
 
 export default {
   name: 'App',
   components: {
-    CookingHeader,
-    CookingFooter,
-    CookingRecipeList,
+    Header,
+    Footer,
+    // CookingRecipeList,
   },
   methods: {
     debugTypeSelected(selectedType) {

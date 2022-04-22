@@ -2,10 +2,10 @@
     <section>
         <h1>Recettes</h1>
         <div>
-            <CookingRecipeTypeList 
+            <TypeList  
                 v-on:recipe-type-selected="handleRecipeTypeSelected" 
             />
-            <CookingRecipeIngredients />
+            <IngredientsList />
         </div>
         <ul>
             <li 
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import RecipeCard  from './CookingRecipe.vue'
-import CookingRecipeTypeList  from './CookingRecipeTypeList.vue'
-import CookingRecipeIngredients from './CookingRecipeIngredients.vue'
+import RecipeCard  from '../components/RecipeCard.vue'
+import TypeList   from '../components/TypeList.vue'
+import IngredientsList from '../components/IngredientsList.vue'
 import recipeService  from '../services/recipeService.js'
 
 export default {
-    name: 'CookingRecipeList',
+    name: 'RecipeList',
     async created() {
         this.recipes = await recipeService.loadRecipes();
     },
@@ -35,8 +35,8 @@ export default {
     },
     components: {
         RecipeCard,
-        CookingRecipeTypeList, 
-        CookingRecipeIngredients
+        TypeList , 
+        IngredientsList
     }, 
     methods: {
         async handleRecipeTypeSelected(selectedType) {

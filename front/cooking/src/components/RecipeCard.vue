@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: 'CookingRecipe',
+    name: 'RecipeCard',
     props: {
         recipe: Object,
     },

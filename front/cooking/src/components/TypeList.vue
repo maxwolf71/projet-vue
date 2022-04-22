@@ -18,7 +18,7 @@ export default {
   async created() {
     this.recipeTypes = await recipeService.loadRecipeTypes();
   },
-  name: "CookingRecipeTypeList",
+  name: "TypeList",
   data() {
     return {
       recipeTypes: [],

@@ -22,7 +22,7 @@ export default {
     async created() {
         this.recipeIngredients = await recipeService.loadRecipeIngredients();
     },
-    name: 'CookingRecipeIngredients',
+    name: 'IngredientsList',
     data() {
         return {
             recipeIngredients: [],

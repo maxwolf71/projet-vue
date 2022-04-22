@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: 'CookingHeader'
+    name: 'HeaderWiew'
 }
 </script>
 

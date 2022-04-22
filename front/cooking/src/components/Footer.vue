@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: 'CookingFooter'
+    name: 'FooterView'
 }
 </script>
 
