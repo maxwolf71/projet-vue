@@ -4,6 +4,17 @@
         <h2>{{recipe.title.rendered}}</h2>
         <div class="card__content" v-html="recipe.excerpt.rendered">
         </div>
+        <div>
+            <router-link 
+            :to="{
+                name: 'recipe',
+                params: {
+                    id: recipe.id
+                }
+            }">
+                Lire la suite
+            </router-link>
+        </div>
     </article>
 </template>
 

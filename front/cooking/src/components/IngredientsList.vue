@@ -3,8 +3,6 @@
     v-if="recipeIngredients.length" 
     v-model="selectedOption"
     @change="selectIngredient">
-
-        <option>Choisir un ingrédient</option>
         <option 
             v-for="ingredient in recipeIngredients" 
             :key="ingredient.id"
