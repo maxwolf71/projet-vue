@@ -1,7 +1,15 @@
 $border-radius: 2rem;
+$borderStyle: 1px solid #555;
 $color-light-green: #eef3ed;
 $gutter: 1rem;
 $shadow: 0 3px 3px #0005;
+
+
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 .card {
     border: 1px solid black;
@@ -11,6 +19,11 @@ $shadow: 0 3px 3px #0005;
     background-color: $color-light-green;
     margin: $gutter;
     box-shadow: $shadow;
+
+    .image-container {
+        height: 300px;
+        overflow: hidden;
+    }
 
     img {
         width: 100%;

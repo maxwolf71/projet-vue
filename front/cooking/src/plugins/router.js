@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import RecipeList from '../views/RecipeList.vue'
 import Recipe from '../views/Recipe.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/recipe/:id',
     name: 'recipe',
     component: Recipe
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   },
 ]
 
