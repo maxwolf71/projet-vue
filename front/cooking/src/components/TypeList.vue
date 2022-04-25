@@ -4,6 +4,7 @@
     v-model="selectedOption"
     @change="selectType"
   >
+    <option>Choisir un type</option>
     <option v-for="type in recipeTypes" :key="type.id" :value="type.id">
       {{ type.name }}
     </option>

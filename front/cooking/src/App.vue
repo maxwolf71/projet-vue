@@ -2,7 +2,9 @@
   <div id="app" :style="style">
     <Header />
     <main>
-      <router-view />
+      <router-view 
+        v-on:recipe-type-selected="debugTypeSelected"
+        :key="$route.fullPath"/> 
     </main>
     <!-- <main>
       <CookingRecipeList v-on:recipe-type-selected="debugTypeSelected" />
