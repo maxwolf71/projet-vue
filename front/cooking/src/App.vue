@@ -3,7 +3,6 @@
     <Header />
     <main>
       <router-view 
-        v-on:recipe-type-selected="debugTypeSelected"
         :key="$route.fullPath"/> 
     </main>
     <!-- <main>
@@ -24,12 +23,6 @@ export default {
     Header,
     Footer,
     // CookingRecipeList,
-  },
-  methods: {
-    debugTypeSelected(selectedType) {
-      console.log(selectedType);
-      this.style = 'background-color: #555'
-    }
   },
   data() {
     return {

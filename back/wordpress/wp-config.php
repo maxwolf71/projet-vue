@@ -18,6 +18,10 @@
  * @package WordPress
  */
 
+ // JWT AUTH CONFIG
+define('JWT_AUTH_SECRET_KEY', "d#A|Go-Y%H7cMv3{WAv]gy2^?|nOV^n*Sv+OE16NbxE/8XOL7#Vt>$6YHxFMZeR");
+define('JWT_AUTH_CORS_ENABLE', true);
+
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'cooking' );
