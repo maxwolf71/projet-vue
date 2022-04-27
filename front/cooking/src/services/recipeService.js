@@ -13,24 +13,32 @@ const recipeService = {
     const response = await axios.get(recipeService.baseURI + "/recipe-type");
     return response.data;
   },
-
   async loadRecipeIngredients() {
     const response = await axios.get(recipeService.baseURI + "/ingredient");
     return response.data;
   },
 
-  async getRecipeByTypes(selectedType) {
-    const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&recipe-type=' + selectedType);
-    return response.data;
-  },
-  async getRecipeByIngredients(selectedIngredient) {
-    const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&recipe-ingredient=' + selectedIngredient);
-    return response.data;
-  },
+  // async getRecipeByTypes(selectedType) {
+  //   const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&recipe-type=' + selectedType);
+  //   return response.data;
+  // },
+  // async getRecipeByIngredients(selectedIngredient) {
+  //   const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&ingredient=' + selectedIngredient);
+  //   return response.data;
+  // },
+  
   async getRecipeById(recipeId) {
     const response = await axios.get(recipeService.baseURI + '/recipe/' + recipeId + '?_embed=true');
     return response.data;
-  }
+  },
+  async loadTerms(taxonomy) {
+    const response = await axios.get(recipeService.baseURI + '/' + taxonomy);
+    return response.data;
+  },
+  async getRecipesByTerm(taxonomy, termId) {
+    const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&' + taxonomy + '=' + termId);
+    return response.data;
+  },
 };
 
 export default recipeService;
