@@ -3,8 +3,13 @@
 </template>
 
 <script>
+import userService from '../services/userService';
+
 export default {
   name: "LogoutView",
+  created() {
+    userService.logout();
+  }
 };
 </script>
 

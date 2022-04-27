@@ -1,9 +1,37 @@
 <template>
     <footer>
         <nav>
-            <a href="#">Liste des recettes</a>
-            <a href="#">Inscription</a>
-            <a href="#">Connexion</a>
+            <router-link 
+                :to="{
+                    name: 'home'
+                }"
+            >
+                Liste des recettes</router-link>
+
+            <router-link 
+                :to="{
+                    name: 'register'
+                }"
+                >
+                Inscription
+            </router-link>
+
+            <router-link 
+                :to="{
+                    name: 'login'
+                }"
+                >
+                Connexion
+            </router-link>
+
+            <router-link 
+                :to="{
+                    name: 'logout'
+                }"
+                >
+                Déconnexion
+            </router-link>
+
         </nav>
     </footer>
 </template>

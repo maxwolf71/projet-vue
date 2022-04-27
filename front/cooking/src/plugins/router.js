@@ -6,6 +6,7 @@ import Recipe from '../views/Recipe.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Profile from '../views/Profile.vue'
+import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: Profile
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
   },
 ]
 

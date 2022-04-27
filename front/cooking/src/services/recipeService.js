@@ -39,6 +39,18 @@ const recipeService = {
     const response = await axios.get(recipeService.baseURI + '/recipe?_embed=true&' + taxonomy + '=' + termId);
     return response.data;
   },
+  async getRecipesByTerms(filters) {
+    let url = recipeService.baseURI + '/recipe?_embed=true&' 
+    for(let taxonomy in filters) {
+      let termId = filters[taxonomy];
+      if(termId){
+        url += '&' + taxonomy + '=' + termId;
+      }
+    }
+
+    const response = await axios.get(url);
+    return response.data;
+  }
 };
 
 export default recipeService;

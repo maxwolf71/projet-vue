@@ -28,26 +28,30 @@ export default {
   components: {
     TermList,
   },
-  
+  data() {
+    return {
+      filters: {},
+    };
+  },
+
   methods: {
     async handleTermSelection(data) {
-
       if (parseInt(data.termId)) { // convert string to number
         this.$emit(
           "recipe-type-term", // name of event
           data //info in the event
         );
-        
-        const recipes = await recipeService.getRecipesByTerm(
-          data.taxonomy,
-          data.termId
-        );
 
-        this.$emit('recipes-loaded', recipes);
+        this.filters[data.taxonomy] = data.termId
+
       } else {
-        const recipes = await recipeService.loadRecipes();
-        this.$emit('recipes-loaded', recipes);
+        this.filters[data.taxonomy] = false
       }
+      
+      const recipes = await recipeService.getRecipesByTerms(
+          this.filters
+        );
+        this.$emit("recipes-loaded", recipes);
     },
   },
 };

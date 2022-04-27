@@ -22,7 +22,6 @@ class Plugin
             [$this, 'createRecipeTypeCustomTaxonomy']
         );
 
-
         add_action(
             'init',
             [$this, 'createRecipeDifficultyCustomTaxonomy']
@@ -37,13 +36,11 @@ class Plugin
 
         $this->createRecipePostType();
         $this->createRecipeDifficultyCustomTaxonomy();
+
         wp_insert_term('Facile', 'difficulty');
         wp_insert_term('Moyen', 'difficulty');
         wp_insert_term('Difficile', 'difficulty');
         wp_insert_term('Chef', 'difficulty');
-        wp_insert_term('Screugnieugnieu', 'difficulty');
-
-
     }
 
 
@@ -119,7 +116,6 @@ class Plugin
     public function deactivate()
     {
         remove_role('chef');
-
     }
 
     public function registerChefRole()

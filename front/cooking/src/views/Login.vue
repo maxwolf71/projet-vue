@@ -1,6 +1,7 @@
 <template>
   <section>
     <form @submit="checkInputs">
+      <h1>Se connecter</h1>
       <Label>
         Login
         <input v-model="login" name="login"
@@ -22,7 +23,6 @@ import userService from "../services/userService";
 import storage from '../plugins/Storage'
 
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   name: "loginView",
   data() {
     return {
@@ -47,12 +47,11 @@ export default {
         let userData = await userService.login(this.login, this.password);
 
         // Verify if connected
-        // if yes
-        if(userData) {
+        if(userData) { // if yes
           // store it
           this.loginFailed = false
           storage.set('userData', userData);
-          console.log('okay');
+          this.$router.push('profile')
 
         } else {
           this.loginFailed = true
