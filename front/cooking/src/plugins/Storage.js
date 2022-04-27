@@ -1,7 +1,18 @@
 const storage = {
-    store(variableName, value) {
-        document.localStorage.store(variableName, value);
-    }
-}
+  set(variableName, value) {
+    const json = JSON.stringify(value);
 
-export default storage
+    window.localStorage.setItem(variableName, json);
+  },
+  get(variableName) {
+    const json = window.localStorage.getItem(variableName);
+    const value = JSON.parse(json);
+
+    return value;
+  },
+  unset(variableName) {
+    window.localStorage.removeItem(variableName)
+  }
+};
+
+export default storage;

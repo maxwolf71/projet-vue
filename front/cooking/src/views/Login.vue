@@ -19,10 +19,11 @@
 
 <script>
 import userService from "../services/userService";
+import storage from '../plugins/Storage'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "login",
+  name: "loginView",
   data() {
     return {
       login: "",
@@ -50,6 +51,7 @@ export default {
         if(userData) {
           // store it
           this.loginFailed = false
+          storage.set('userData', userData);
           console.log('okay');
 
         } else {

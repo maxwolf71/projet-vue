@@ -5,9 +5,7 @@
       <router-view 
         :key="$route.fullPath"/> 
     </main>
-    <!-- <main>
-      <CookingRecipeList v-on:recipe-type-selected="debugTypeSelected" />
-    </main> -->
+  
     <Footer />
   </div>
 </template>
@@ -15,14 +13,12 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-// import CookingRecipeList  from './components/CookingRecipeList.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
     Footer,
-    // CookingRecipeList,
   },
   data() {
     return {

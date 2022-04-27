@@ -19,8 +19,7 @@
 import recipeService from '../services/recipeService'
 
 export default ({
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: 'Recipe',
+    name: 'RecipeView',
     async created() {
         this.recipeId = this.$route.params.id
 
