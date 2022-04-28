@@ -7,6 +7,7 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Profile from '../views/Profile.vue'
 import Register from '../views/Register.vue'
+import RegisterSuccess from '../views/RegisterSuccess.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/register-success',
+    name: 'register-success',
+    component: RegisterSuccess
   },
 ]
 

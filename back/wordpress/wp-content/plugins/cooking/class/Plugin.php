@@ -5,7 +5,8 @@ class Plugin
 {
 
 
-    public function __construct() {
+    public function __construct() 
+    {
 
         add_action(
             'init',

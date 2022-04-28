@@ -2,10 +2,12 @@ import axios from "axios";
 import storage from '../plugins/Storage'
 
 const userService = {
-  baseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/jwt-auth/v1",
+  jwtBaseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/jwt-auth/v1",
+  cookingBaseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/cooking/v1",
 
   login: async (login, password) => {
-    let response = await axios.post(userService.baseURI + "/token", {
+    let response = await axios.post(userService.jwtBaseURI + "/token", 
+    {
       username: login,
       password: password,
     }).catch(() => {
@@ -19,7 +21,7 @@ const userService = {
     storage.unset('userData')
   },
 
-  async isLoggedIn() {
+  isLoggedIn: async () => {
     // retrieve token from localStorage
     const userData = storage.get('userData');
     // is userData empty ?
@@ -33,7 +35,7 @@ const userService = {
           }
         }
         const response = await axios.post(
-          userService.baseURI + '/token/validate',
+          userService.jwtBaseURI + '/token/validate',
           null,
           options
         ).catch(() => {
@@ -44,6 +46,20 @@ const userService = {
       }
     }
     return false
+  },
+  register: async (username, email,password) => {
+    const response = await axios.post(
+      userService.cookingBaseURI + '/register',
+      {
+        username: username,
+        email: email,
+        password: password
+      } 
+    ).catch((error) => {
+      console.log(error);
+      return false
+  })
+    return response.data;
   }
 };
 

@@ -2,12 +2,15 @@
  /*
   Plugin Name: Cooking
   */
-
+  
+use cooking\Api;
 use cooking\Plugin;
 
   require __DIR__ . '/vendor-cooking/autoload.php';
 
   $cooking = new Plugin();
+  // STEP API instanciation d'un nouvel Api
+$api = new Api();
 
 register_activation_hook(
    __FILE__,
@@ -20,5 +23,3 @@ register_deactivation_hook(
    [$cooking, 'deactivate']
 );
 
-// STEP API instanciation d'un nouvel Api
-// $api = new Api();
