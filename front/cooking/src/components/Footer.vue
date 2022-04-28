@@ -7,6 +7,13 @@
                 }"
             >
                 Liste des recettes</router-link>
+                
+            <router-link 
+                :to="{
+                    name: 'recipe-create'
+                }"
+            >
+                Nouvelle recette</router-link>
 
             <router-link 
                 :to="{

@@ -8,6 +8,7 @@ import Logout from '../views/Logout.vue'
 import Profile from '../views/Profile.vue'
 import Register from '../views/Register.vue'
 import RegisterSuccess from '../views/RegisterSuccess.vue'
+import RecipeCreate from '../views/RecipeCreate.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/register-success',
     name: 'register-success',
     component: RegisterSuccess
+  },
+  {
+    path: '/recipe-create',
+    name: 'recipe-create',
+    component: RecipeCreate
   },
 ]
 
