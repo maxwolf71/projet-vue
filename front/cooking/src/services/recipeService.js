@@ -51,8 +51,8 @@ const recipeService = {
   },
   async saveRecipe(title, type, description, ingredients) {
     const userData = storage.get("userData");
-    // is userData empty ?
-    if (userData != null) {
+    
+    if (userData != null) { // is userData empty ?
       const token = userData.token;
 
       if (token) {
