@@ -31,26 +31,81 @@ class Api
         );
 
         register_rest_route(
-            'cooking/v1', // name of the API (endpoint)
-            '/recipe-save', // route following our API
+            'cooking/v1',
+            '/recipe-save',
             [
                 'methods' => 'post',
                 'callback' => [$this, 'recipeSave']
             ]
         );
+
+        register_rest_route(
+            'cooking/v1',
+            '/upload-image',
+            [
+                'methods' => 'post',
+                'callback' => [$this, 'uploadImage']
+            ]
+        );
     }
 
-    public function recipeSave(WP_REST_Request $request) 
+    public function uploadImage(WP_REST_Request $request)
+    {
+        $imageFileIndex = 'image'; // variable used to send the image (fromRecipeCreate)
+        $imageData = $_FILES[$imageFileIndex]; // info about uploaded Image
+        $imageSource = $imageData['tmp_name']; // path where the uploaded image is stored
+        $destination = wp_upload_dir(); // where wp stores uploaded files
+        $imageDestinationFolder = $destination['path']; // wp folder where image will be stored
+
+        $imageName = sanitize_file_name(
+            md5(uniqid()) . '-' . $imageData['name']
+        );
+        $imageDestination = $imageDestinationFolder . '/' . $imageName;
+
+        $success = move_uploaded_file($imageSource, $imageDestination); // move uploade file to wp storage folder
+
+        if ($success) { // if it worked
+            $imageType =  wp_check_filetype($imageDestination, null);
+            $attachement = array(
+                'post_mime_type' => $imageType['type'],
+                'post_title' => $imageName,
+                'post_content' => '',
+                'post_status' => 'inherit'
+            );
+            $attachmentId = wp_insert_attachment($attachement, $imageDestination);
+            if (is_int($attachmentId)) {
+                require_once(ABSPATH . 'wp-admin/includes/image.php');
+                $metadata = wp_generate_attachment_metadata($attachmentId, $imageDestination);
+                wp_update_attachment_metadata($attachmentId, $metadata);
+
+                return [
+                    'status' => 'success',
+                    'image' => [
+                        'url' => $destination['url'] . '/' . $imageName,
+                        'id' => $attachmentId
+                    ]
+                ];
+            } else {
+                return [
+                    'status' => 'failed'
+                ];
+            }
+        }
+    }
+
+    public function recipeSave(WP_REST_Request $request)
     {
         $title =  $request->get_param('title');
         $type =  $request->get_param('type');
         $description =  $request->get_param('description');
         $ingredients =  $request->get_param('ingredients');
+        $imageId =  $request->get_param('imageId');
 
         $user = wp_get_current_user(); // get user who sent the request
 
-        if ( in_array( 'contributor', (array) $user->roles ) ||
-        in_array( 'administrator', (array) $user->roles )
+        if (
+            in_array('contributor', (array) $user->roles) ||
+            in_array('administrator', (array) $user->roles)
         ) {
 
             $recipeCreateResult = wp_insert_post(
@@ -60,21 +115,28 @@ class Api
                     'post_status' => 'publish',
                     'post_type' => 'recipe'
                 ]
+            );
+
+            if($imageId) {
+                set_post_thumbnail(
+                    $recipeCreateResult,
+                    $imageId
+                );
+            }
+
+            if (is_int($recipeCreateResult)) { // recipe created
+                wp_set_post_terms(
+                    $recipeCreateResult,
+                    [$type],
+                    'recipe-type'
                 );
 
-                if(is_int($recipeCreateResult)) { // recipe created
-                    wp_set_post_terms(
-                        $recipeCreateResult,
-                        [$type],
-                        'recipe-type'
-                    );
-
-                    wp_set_post_terms(
-                        $recipeCreateResult,
-                        $ingredients,
-                        'ingredient'
-                    );
-                } 
+                wp_set_post_terms(
+                    $recipeCreateResult,
+                    $ingredients,
+                    'ingredient'
+                );
+            }
 
             return [
                 'title' => $title,
@@ -85,8 +147,6 @@ class Api
                 'recipe-id' => $recipeCreateResult
             ];
         }
-
-        
     }
 
     public function register(WP_REST_Request $request)
@@ -94,7 +154,7 @@ class Api
         $email = $request->get_param('email');
         $password = $request->get_param('password');
         $username = $request->get_param('username');
-        
+
         $userCreateResult = wp_create_user(
             $username,
             $password,
@@ -109,12 +169,11 @@ class Api
             return [
                 'success' => true,
                 'userId' => $userCreateResult,
-                'username'=> $username,
+                'username' => $username,
                 'email' => $email,
                 'role' => 'contributor'
             ];
-        }
-        else {
+        } else {
             // user wasn't created because there was an error 
             return [
                 'success' => false,

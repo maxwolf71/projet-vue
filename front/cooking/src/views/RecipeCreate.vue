@@ -7,6 +7,14 @@
       </div>
 
       <div>
+        <label> 
+          Image d'illustration <input type="file" @change="uploadImage" /> 
+          <img v-if="image" :src="image" />
+          <input v-model="imageId" type="hidden" />
+        </label>
+      </div>
+
+      <div>
         <div v-for="type in types" :key="type.id">
           <label> <input type="radio" name="type" :value="type.id" v-model="selectedType" /> {{ type.name }} </label>
         </div>
@@ -46,7 +54,9 @@ export default {
       types: [],
       selectedType: null,
       selectedIngredients: [],
-      createFail: false
+      createFail: false,
+      image: null,
+      imageId: null
     };
   },
   async created() {
@@ -73,7 +83,8 @@ export default {
             this.title,
             this.selectedType,
             this.description,
-            this.selectedIngredients
+            this.selectedIngredients,
+            this.imageId
         );
 
         if(result) {
@@ -82,7 +93,17 @@ export default {
         else {
           this.createFail = true
         }
+    },
+    async uploadImage(event) {
+      event.preventDefault();
+
+      const image = event.currentTarget.files[0];
+
+      let imageResult = await recipeService.uploadImage(image);
+
+      this.image = imageResult.image.url
+      this.imageId = imageResult.image.id
     }
-  },
+  }
 };
 </script>

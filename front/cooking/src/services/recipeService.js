@@ -49,10 +49,11 @@ const recipeService = {
     const response = await axios.get(url);
     return response.data;
   },
-  async saveRecipe(title, type, description, ingredients) {
+  async saveRecipe(title, type, description, ingredients, imageId) {
     const userData = storage.get("userData");
-    
-    if (userData != null) { // is userData empty ?
+
+    if (userData != null) {
+      // is userData empty ?
       const token = userData.token;
 
       if (token) {
@@ -62,23 +63,46 @@ const recipeService = {
           },
         };
 
-        const result = await axios.post(
-          recipeService.cookingBaseURI + "/recipe-save",
-          {
-            title: title,
-            type: type,
-            description: description,
-            ingredients: ingredients,
-          },
-          options
-        ).catch((error) => { // if invalid token
-          return false,
-          console.log(error);
-        })
-        return result.data
+        const result = await axios
+          .post(
+            recipeService.cookingBaseURI + "/recipe-save",
+            {
+              title: title,
+              type: type,
+              description: description,
+              ingredients: ingredients,
+              imageId: imageId
+            },
+            options
+          )
+          .catch((error) => {
+            // if invalid token
+            return false, console.log(error);
+          });
+        return result.data;
       }
     }
     return false;
+  },
+  async uploadImage(image) {
+    let formData = new FormData(); // creates à "fake" form
+
+    formData.append("image", image);
+
+    const userData = storage.get('userData');
+    const token = userData.token
+
+    const result = await axios.post(
+      recipeService.cookingBaseURI + "/upload-image",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          'Authorization': 'Bearer ' + token
+        }
+      }
+    );
+    return result.data
   },
 };
 
