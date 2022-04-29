@@ -45,7 +45,8 @@ export default {
       ingredients: [],
       types: [],
       selectedType: null,
-      selectedIngredients: []
+      selectedIngredients: [],
+      createFail: false
     };
   },
   async created() {
@@ -68,14 +69,19 @@ export default {
     },
     async saveRecipe(event) {
         event.preventDefault();
-        const result = recipeService.saveRecipe(
+        const result = await recipeService.saveRecipe(
             this.title,
             this.selectedType,
             this.description,
             this.selectedIngredients
         );
 
-        console.log(result);
+        if(result) {
+          this.$router.push('recipe-create-success')
+        }
+        else {
+          this.createFail = true
+        }
     }
   },
 };
