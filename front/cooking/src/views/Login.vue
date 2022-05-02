@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import userService from "../services/userService";
-import storage from '../plugins/Storage'
 
 export default {
   name: "loginView",
@@ -44,18 +42,20 @@ export default {
       }
       // If no errors
       if (!this.passwordEmpty && !this.loginEmpty) {
-        let userData = await userService.login(this.login, this.password);
+        let userData = await this.$store.state.services.user.login(this.login, this.password);
 
         // Verify if connected
         if(userData) { // if yes
           // store it
           this.loginFailed = false
-          storage.set('userData', userData);
-          this.$router.push('profile')
+          this.$store.state.services.storage.set('userData', userData);
+          this.$router.push('profile');
+
+          this.$store.commit('saveUser', userData);
 
         } else {
           this.loginFailed = true
-          console.log('failed');
+          console.log('loginFailed');
         }
         
       }

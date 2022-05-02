@@ -1,5 +1,5 @@
 import axios from "axios";
-import storage from "@/plugins/Storage";
+import storage from "@/plugins/storage";
 
 const recipeService = {
   baseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/wp/v2",

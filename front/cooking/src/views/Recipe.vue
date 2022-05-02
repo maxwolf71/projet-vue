@@ -9,21 +9,21 @@
             :to="{
                 name: 'home',
             }">
-                Retour sur les recettes
+                Retour sur la page d'accueil
             </router-link>
         </div>
     </article>
 </template>
 
 <script>
-import recipeService from '../services/recipeService'
 
 export default ({
+    
     name: 'RecipeView',
     async created() {
         this.recipeId = this.$route.params.id
 
-        this.recipe = await recipeService.getRecipeById(this.recipeId);
+        this.recipe = await this.$store.state.services.recipe.getRecipeById(this.recipeId);
     },
     data() {
         return {

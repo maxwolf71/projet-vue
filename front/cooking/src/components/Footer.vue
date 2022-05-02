@@ -9,6 +9,7 @@
                 Liste des recettes</router-link>
                 
             <router-link 
+                v-if="user" 
                 :to="{
                     name: 'recipe-create'
                 }"
@@ -16,6 +17,7 @@
                 Nouvelle recette</router-link>
 
             <router-link 
+                v-if="!user"
                 :to="{
                     name: 'register'
                 }"
@@ -24,14 +26,7 @@
             </router-link>
 
             <router-link 
-                :to="{
-                    name: 'login'
-                }"
-                >
-                Connexion
-            </router-link>
-
-            <router-link 
+                v-if="user"
                 :to="{
                     name: 'logout'
                 }"
@@ -45,10 +40,16 @@
 
 <script>
 export default {
-    name: 'FooterView'
+    name: 'FooterView',
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
+    }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../assets/scss/main.scss";
 
 </style>

@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import userService from '../services/userService';
 
 export default {
   name: "LogoutView",
   created() {
-    userService.logout();
+    this.$store.state.services.user.logout();
+    this.$store.commit('clearUser');
   }
 };
 </script>

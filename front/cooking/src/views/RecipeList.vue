@@ -14,13 +14,12 @@
 
 <script>
 import RecipeCard from "../components/RecipeCard.vue";
-import recipeService from "../services/recipeService.js";
 import Filters from "../components/Filters";
 
 export default {
   name: "RecipeList",
   async created() {
-    this.recipes = await recipeService.loadRecipes();
+    this.recipes = await this.$store.state.services.recipe.loadRecipes();
   },
   data() {
     return {

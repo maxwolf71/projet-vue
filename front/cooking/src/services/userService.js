@@ -1,5 +1,5 @@
 import axios from "axios";
-import storage from '../plugins/Storage'
+import storage from '../plugins/storage'
 
 const userService = {
   jwtBaseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/jwt-auth/v1",

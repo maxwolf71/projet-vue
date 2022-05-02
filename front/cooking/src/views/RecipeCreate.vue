@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import recipeService from "../services/recipeService";
+
 import userService from "../services/userService";
 
 export default {
@@ -67,19 +67,19 @@ export default {
       this.isUserConnected = true;
     }
 
-    this.loadIngredient();
+    this.loadIngredients();
     this.loadType();
   },
   methods: {
-    async loadIngredient() {
-      this.ingredients = await recipeService.loadRecipeIngredients();
+    async loadIngredients() {
+      this.ingredients = await this.$store.state.services.recipe.loadRecipeIngredients();
     },
     async loadType() {
-      this.types = await recipeService.loadRecipeTypes();
+      this.types = await this.$store.state.services.recipe.loadRecipeTypes();
     },
     async saveRecipe(event) {
         event.preventDefault();
-        const result = await recipeService.saveRecipe(
+        const result = await this.$store.state.services.recipe.saveRecipe(
             this.title,
             this.selectedType,
             this.description,
@@ -99,7 +99,7 @@ export default {
 
       const image = event.currentTarget.files[0];
 
-      let imageResult = await recipeService.uploadImage(image);
+      let imageResult = await this.$store.state.services.recipe.uploadImage(image);
 
       this.image = imageResult.image.url
       this.imageId = imageResult.image.id
@@ -107,3 +107,9 @@ export default {
   }
 };
 </script>
+
+<style>
+img {
+  width: 10rem;
+}
+</style>
