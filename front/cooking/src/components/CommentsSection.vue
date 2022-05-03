@@ -1,7 +1,7 @@
 <template>
     <section>
         <h2>Commentaires</h2>
-        <CommentForm v-if="user" />
+        <CommentForm v-if="user" :recipe="recipe" />
     </section>
 </template>
 
@@ -17,6 +17,9 @@ export default {
         user() {
             return this.$store.state.user;
         }
+    },
+    props: {
+        recipe: Object
     }
 }
 </script>

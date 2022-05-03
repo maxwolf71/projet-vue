@@ -1,9 +1,11 @@
 <template>
     <article class="card" v-if="recipe">
-        <img :src="getImageUrl">
-        <h2>{{recipe.title.rendered}}</h2>
-        <div class="card__content" v-html="recipe.content.rendered">
+        <div class="image-container">
+            <img :src="getImageUrl">
         </div>
+        <h2>{{recipe.title.rendered}}</h2>
+        <div class="card__content" v-html="recipe.content.rendered"></div>
+        <CommentsSection :recipe="this.recipe" />
         <div>
             <router-link 
             :to="{
@@ -16,10 +18,14 @@
 </template>
 
 <script>
+import CommentsSection from '../components/CommentsSection.vue';
 
 export default ({
     
     name: 'RecipeView',
+    components: {
+        CommentsSection,
+    },
     async created() {
         this.recipeId = this.$route.params.id
 

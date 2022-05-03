@@ -15,11 +15,10 @@
 </template>
 
 <script>
-import recipeService  from '../services/recipeService.js'
 
 export default {
     async created() {
-        this.recipeIngredients = await recipeService.loadRecipeIngredients();
+        this.recipeIngredients = await this.$store.state.services.recipe.loadRecipeIngredients();
     },
     name: 'IngredientsList',
     data() {

@@ -8,11 +8,20 @@
 </template>
 
 <script>
-import recipeService from "../services/recipeService.js";
-
 export default {
   async created() {
-    this.terms = await recipeService.loadTerms(this.taxonomy);
+    if (this.$store.state.termsList[this.taxonomy]) {
+      this.terms = this.$store.state.termsList[this.taxonomy];
+    } else {
+      this.terms = await this.$store.state.services.recipe.loadTerms(
+        this.taxonomy
+      );
+
+      this.$store.commit("saveTermsList", {
+        taxonomy: this.taxonomy,
+        terms: this.terms,
+      });
+    }
   },
   name: "TermList",
   data() {
@@ -30,8 +39,7 @@ export default {
   methods: {
     selectTerm(event) {
       event.preventDefault();
-      this.$emit('recipe-term-selected', 
-      {
+      this.$emit("recipe-term-selected", {
         termId: this.selectedOption,
         taxonomy: this.taxonomy,
       });

@@ -11,7 +11,6 @@ const recipeService = {
     );
     return response.data;
   },
-
   async loadRecipeTypes() {
     const response = await axios.get(recipeService.baseURI + "/recipe-type");
     return response.data;
@@ -45,7 +44,6 @@ const recipeService = {
         url += "&" + taxonomy + "=" + termId;
       }
     }
-
     const response = await axios.get(url);
     return response.data;
   },
@@ -77,9 +75,10 @@ const recipeService = {
           )
           .catch((error) => {
             // if invalid token
-            return false, console.log(error);
+            return false, 
+            console.log(error);
           });
-        return result.data;
+        return result;
       }
     }
     return false;
@@ -104,6 +103,39 @@ const recipeService = {
     );
     return result.data
   },
+
+  async saveComment(recipeId, comment) {
+    const userData = storage.get("userData");
+
+    if (userData != null) { // is userData empty ?
+      const token = userData.token;
+
+      if (token) {
+        const options = {
+          headers: {
+            Authorization: "Bearer" + token,
+          },
+        };
+
+        const result = await axios
+          .post(
+            recipeService.cookingBaseURI + "/comment-save",
+            {
+              recipeId: recipeId,
+              comment: comment 
+            },
+            options
+          )
+          .catch((error) => {
+            // if invalid token
+            return false, 
+            console.log(error);
+          });
+        return result;
+      }
+    }
+    return false;
+  }
 };
 
 export default recipeService;

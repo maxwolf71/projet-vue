@@ -47,6 +47,58 @@ class Api
                 'callback' => [$this, 'uploadImage']
             ]
         );
+
+        register_rest_route(
+            'cooking/v1',
+            '/comment-save',
+            [
+                'methods' => 'post',
+                'callback' => [$this, 'commentSave']
+            ]
+        );
+    }
+
+    public function commentSave(WP_REST_Request $request) {
+        $comment = $request->get_param('comment');
+        $recipeId = $request->get_param('recipeId');
+
+        $user = wp_get_current_user();
+
+        if (
+            in_array('chef', (array) $user->roles) ||
+            in_array('contributor', (array) $user->roles) ||
+            in_array('administrator', (array) $user->roles)
+        ) {
+
+            $commentSaveResult = wp_insert_comment(
+                [
+                'user_id' => $user->ID,
+                'comment_post_ID' => $recipeId,
+                'comment_content' => $comment,
+                ]
+            );
+
+            if(is_int($commentSaveResult)) {
+                return [
+                    'success' => true,
+                    'recipe-id' => $recipeId,
+                    'comment' => $comment,
+                    'user' => $user,
+                    'comment-id' => $commentSaveResult
+                ];
+            } 
+            else {
+                return [
+                    'success' => false
+                ];
+            }
+            
+        } 
+        else {
+            return [
+                'success' => false
+            ];
+        }
     }
 
     public function uploadImage(WP_REST_Request $request)
@@ -104,6 +156,7 @@ class Api
         $user = wp_get_current_user(); // get user who sent the request
 
         if (
+            in_array('chef', (array) $user->roles) ||
             in_array('contributor', (array) $user->roles) ||
             in_array('administrator', (array) $user->roles)
         ) {
@@ -139,6 +192,7 @@ class Api
             }
 
             return [
+                'success' => true,
                 'title' => $title,
                 'type' => $type,
                 'description' => $description,
@@ -147,6 +201,9 @@ class Api
                 'recipe-id' => $recipeCreateResult
             ];
         }
+        return [
+            'success' => false,
+        ];
     }
 
     public function register(WP_REST_Request $request)

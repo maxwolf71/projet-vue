@@ -19,7 +19,12 @@ import Filters from "../components/Filters";
 export default {
   name: "RecipeList",
   async created() {
-    this.recipes = await this.$store.state.services.recipe.loadRecipes();
+    if (this.$store.state.recipes) { // is there data in store ?
+      this.recipes = this.$store.state.recipes; // yes then retrieve data
+    } else { // otherwise call api
+      this.recipes = await this.$store.state.services.recipe.loadRecipes();
+      this.$store.commit('saveRecipe',this.recipes)
+    }
   },
   data() {
     return {
@@ -28,12 +33,12 @@ export default {
   },
   components: {
     RecipeCard,
-    Filters
+    Filters,
   },
   methods: {
     handleLoadedRecipes(recipes) {
-      this.recipes = recipes
-    }
-  }
+      this.recipes = recipes;
+    },
+  },
 };
 </script>

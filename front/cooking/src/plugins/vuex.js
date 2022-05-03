@@ -9,6 +9,9 @@ import storage from './storage'
 const store = new Vuex.Store({
   state: {
     user: null,
+    recipes: null,
+    recipeIngredients: [],
+    termsList: {},
     services: {
       user: userService,
       recipe: recipeService,
@@ -16,6 +19,14 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    saveRecipe(state, recipes) {
+      state.recipes = recipes;
+    },
+
+    saveTermsList(state, data) {
+      state.termsList[data.taxonomy] = data.terms;
+    },
+
     saveUser(state, user) {
       state.user = user;
     },
