@@ -2,8 +2,8 @@ import axios from "axios";
 import storage from "@/plugins/storage";
 
 const recipeService = {
-  baseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/wp/v2",
-  cookingBaseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/cooking/v1",
+  baseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/wp/v2", // for GET
+  cookingBaseURI: process.env.VUE_APP_WORDPRESS_API_URL + "/cooking/v1", // for POST
 
   async loadRecipes() {
     const response = await axios.get(
@@ -69,45 +69,25 @@ const recipeService = {
               type: type,
               description: description,
               ingredients: ingredients,
-              imageId: imageId
+              imageId: imageId,
             },
             options
           )
           .catch((error) => {
             // if invalid token
-            return false, 
-            console.log(error);
+            return false, console.log(error);
           });
         return result;
       }
     }
     return false;
   },
-  async uploadImage(image) {
-    let formData = new FormData(); // creates à "fake" form
-
-    formData.append("image", image);
-
-    const userData = storage.get('userData');
-    const token = userData.token
-
-    const result = await axios.post(
-      recipeService.cookingBaseURI + "/upload-image",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          'Authorization': 'Bearer ' + token
-        }
-      }
-    );
-    return result.data
-  },
 
   async saveComment(recipeId, comment) {
     const userData = storage.get("userData");
 
-    if (userData != null) { // is userData empty ?
+    if (userData != null) { // is there userData ?
+      
       const token = userData.token;
 
       if (token) {
@@ -122,20 +102,52 @@ const recipeService = {
             recipeService.cookingBaseURI + "/comment-save",
             {
               recipeId: recipeId,
-              comment: comment 
+              comment: comment,
             },
             options
           )
           .catch((error) => {
             // if invalid token
-            return false, 
-            console.log(error);
+            return false, console.log(error);
           });
         return result;
       }
     }
     return false;
-  }
+  },
+  async loadComments() {
+    const response = await axios.get(
+      recipeService.baseURI + "/comments?_embed=true"
+    );
+    return response.data;
+  },
+  async getCommentById(commentId) {
+    const response = await axios.get(
+      recipeService.baseURI + "/comments/" + commentId + "?_embed=true"
+    );
+    return response.data;
+  },
+
+  async uploadImage(image) {
+    let formData = new FormData(); // creates à "fake" form
+
+    formData.append("image", image);
+
+    const userData = storage.get("userData");
+    const token = userData.token;
+
+    const result = await axios.post(
+      recipeService.cookingBaseURI + "/upload-image",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return result.data;
+  },
 };
 
 export default recipeService;
