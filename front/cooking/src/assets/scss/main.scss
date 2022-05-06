@@ -3,6 +3,7 @@ $borderStyle: 1px solid #555;
 $color-light-green: #eef3ed;
 $gutter: 1rem;
 $shadow: 0 3px 3px #0005;
+$light-blue: lightblue;
 
 
 #app {
@@ -14,7 +15,6 @@ $shadow: 0 3px 3px #0005;
 .card {
     border: 1px solid black;
     border-radius: $border-radius;
-    position: relative;
     overflow: hidden;
     background-color: $color-light-green;
     margin: $gutter;
@@ -35,6 +35,7 @@ $shadow: 0 3px 3px #0005;
     }
 }
 
-li {
+li, a {
     list-style: none;
+    text-decoration: none;
 }

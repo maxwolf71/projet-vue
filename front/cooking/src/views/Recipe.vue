@@ -5,7 +5,7 @@
         </div>
         <h2>{{recipe.title.rendered}}</h2>
         <div class="card__content" v-html="recipe.content.rendered"></div>
-        <CommentsSection :recipe="this.recipe" />
+        <CommentsSection :recipe="recipe" />
         <div>
             <router-link 
             :to="{

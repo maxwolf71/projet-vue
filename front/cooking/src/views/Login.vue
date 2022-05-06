@@ -71,6 +71,7 @@ form {
   box-shadow: 8px 8px 12px #aaa;
   display: flex;
   flex-direction: column;
+  align-items: center;
   border: $borderStyle;
   border-radius: $border-radius;
   padding: $gutter;
@@ -78,6 +79,10 @@ form {
 
   label {
     margin-bottom: $gutter;
+  }
+  button {
+    border-radius: 10px;
+    width: 40%;
   }
 }
 </style>

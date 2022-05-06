@@ -23,6 +23,10 @@ const store = new Vuex.Store({
       state.recipes = recipes;
     },
 
+    saveComment(state, comments) {
+      state.comments = comments;
+    },
+
     saveTermsList(state, data) {
       state.termsList[data.taxonomy] = data.terms;
     },

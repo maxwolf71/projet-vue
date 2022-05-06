@@ -1,11 +1,9 @@
 <template>
     <header>
-
         <router-link 
             :to="{
                 name: 'home',
             }">
-                <img class="logo" src="../assets/images/oven.svg">
                 <span>10 minutes </span>
                 <span>O' four</span>
             </router-link>
@@ -25,8 +23,6 @@
             }">
                 Connexion
             </router-link>
-
-
     </header>
 </template>
 
@@ -44,14 +40,15 @@ export default {
 <style scoped lang=scss>
 @import "../assets/scss/main.scss";
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $light-blue;;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    margin-bottom: $gutter;
     padding: $gutter;
-    line-height: $gutter * 3;
-
-    .logo {
-        height: 3rem;
-    }
 }
 </style>

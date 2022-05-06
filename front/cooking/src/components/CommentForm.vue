@@ -29,8 +29,7 @@ export default {
             if(this.$store.state.user) { // send comment only if user is connnected
                 this.$store.state.services.recipe.saveComment(
                     this.recipe.id,
-                    this.comment
-                    
+                    this.comment,
                 ); // api call to save the comment
                 this.userDisconnected = false
             } else{
