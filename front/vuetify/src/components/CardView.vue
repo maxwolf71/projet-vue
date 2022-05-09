@@ -18,7 +18,7 @@
         class="mx-0"
       >
         <v-rating
-          :value="3"
+          :value="4"
           color="blue"
           dense
           half-increments
@@ -40,7 +40,7 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-title>Ingrédient</v-card-title>
+    <v-card-title>Ingrédients</v-card-title>
 
     <v-card-text>
       <v-chip-group
@@ -59,6 +59,7 @@
     <v-card-actions>
       <v-btn
         color="deep-purple lighten-2"
+        elevation="2"
         text
         @click="reserve"
       >
